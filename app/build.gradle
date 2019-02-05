@@ -20,15 +20,84 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled true
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+    // Temporary fix until alpha10
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha03'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.core:core-ktx:$androidx_core_ktx"
+    implementation "androidx.constraintlayout:constraintlayout:$support_constraint_layout_version"
+    implementation "androidx.recyclerview:recyclerview:$androidx_view_version"
+    implementation "androidx.cardview:cardview:$androidx_view_version"
+    implementation "androidx.legacy:legacy-support-v4:$androidx_view_version"
+    implementation "com.google.android.material:material:$android_material_version"
+
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    implementation "com.karumi:dexter:5.0.0"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+
+    implementation "com.uber.autodispose:autodispose-ktx:$auto_dispose_version"
+    implementation "com.uber.autodispose:autodispose-android-ktx:$auto_dispose_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-ktx:$auto_dispose_version"
+
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    //unit testing
+    testImplementation "org.json:json:$test_gson_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_core_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$test_retrofit_mock_webserver_version"
+
+    //ui testing
+    androidTestImplementation "com.android.support.test:runner:$test_runner_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "com.android.support.test:rules:$support_test_rules_version"
+    androidTestImplementation ("com.android.support.test.espresso:espresso-contrib:$espresso_contrib_version"){
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+}
+
+
+project.afterEvaluate {
+    android.applicationVariants.all { variant ->
+        task "installRun${variant.name.capitalize()}"(type: Exec, dependsOn: "install${variant.name.capitalize()}", group: "run") {
+            commandLine = ["adb", "shell", "monkey", "-p", variant.applicationId + " 1"]
+            doLast {
+                println "Launching ${variant.applicationId}"
+            }
+        }
+    }
 }
