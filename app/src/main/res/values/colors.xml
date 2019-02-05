@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
+    <color name="primary">#8BC34A</color>
+    <color name="primary_dark">#689F38</color>
+    <color name="primary_light">#DCEDC8</color>
+    <color name="accent">#00BCD4</color>
+
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+
+    <color name="icons">#212121</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="tangerine">#ff8c00</color>
+    <color name="dusty_orange">#e77e38</color>
+    <color name="pale_red">#e26037</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="offWhite">#c1c1c1</color>
+    <color name="transparent">#00ffffff</color>
+
+    <color name="onBoarding1Border">#1f5279</color>
+    <color name="onBoarding1Start">#2d75ac</color>
+    <color name="onBoarding1End">#259dcf</color>
+
+    <color name="onBoarding2Border">#017e42</color>
+    <color name="onBoarding2Start">#00c466</color>
+    <color name="onBoarding2End">#34ea45</color>
+
+    <color name="onBoarding3Border">#973124</color>
+    <color name="onBoarding3Start">#e14b37</color>
+    <color name="onBoarding3End">#e68231</color>
+
+    <color name="btnGreen">#00c466</color>
+    <color name="btnGreenAlpha">#8300c466</color>
+
+    <color name="btnRed">#e14c32</color>
+    <color name="btnRedAlpha">#83e14c32</color>
+
+    <color name="btnBlue">#2d75ac</color>
+    <color name="btnBlueAlpha">#832d75ac</color>
+
+
+    <color name="medium_blue">#2d75ac</color>
+
+    <color name="overlay">#6e757575</color>
+    <color name="screen_background">#f0f0f0</color>
+
 </resources>

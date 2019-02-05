@@ -1,0 +1,29 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="button_radius">4dp</dimen>
+    <dimen name="button_radius_round">100dp</dimen>
+
+    <dimen name="marginCard">5dp</dimen>
+    <dimen name="marginHalf">4dp</dimen>
+    <dimen name="marginNormal">8dp</dimen>
+    <dimen name="marginDouble">16dp</dimen>
+    <dimen name="marginTriple">24dp</dimen>
+    <dimen name="marginBig">32dp</dimen>
+
+    <dimen name="paddingHalf">4dp</dimen>
+    <dimen name="paddingNormal">8dp</dimen>
+    <dimen name="paddingDouble">16dp</dimen>
+    <dimen name="paddingTriple">24dp</dimen>
+    <dimen name="paddingBig">32dp</dimen>
+
+    <dimen name="profileCardImageSize">65dp</dimen>
+
+    <dimen name="buttonSizeNormal">35dp</dimen>
+    <dimen name="dividerHeight">0.75dp</dimen>
+    <dimen name="dividerHeightDouble">1.5dp</dimen>
+    <dimen name="width_fav_item">250dp</dimen>
+
+</resources>

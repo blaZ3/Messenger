@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Messenger</string>
+
+    <string name="str_progress">Loading messages....</string>
+    <string name="str_network_error">Network error! Please try again</string>
+    <string name="str_hint_title">Title</string>
+    <string name="str_hint_comment">Comment</string>
+    <string name="str_txt_cancel">Cancel</string>
+    <string name="str_txt_okay">Okay</string>
+
+    <string name="str_grant_storage_permissions">Please grant all permissions</string>
+    <string name="str_permission_rationale">Please grant all permissions</string>
+    <string name="str_home">Home</string>
+
 </resources>
