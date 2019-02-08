@@ -4,7 +4,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import me.tellvivk.messenger.R
 
-open class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity: AppCompatActivity(), BaseView {
 
     protected fun initToolbar(title: String, toolbar: androidx.appcompat.widget.Toolbar) {
         setSupportActionBar(toolbar)
@@ -13,8 +13,6 @@ open class BaseActivity: AppCompatActivity() {
             .getDrawable(R.drawable.ic_arrow_back_white)
         toolbar.setNavigationOnClickListener { onBackPressed() }
     }
-
-
 
     fun showToast(msg: String){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
