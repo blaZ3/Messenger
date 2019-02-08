@@ -11,14 +11,14 @@ import me.tellvivk.messenger.app.screens.home.adapter.SMSListItem
 import me.tellvivk.messenger.app.screens.home.adapter.SMSListItemHeader
 import me.tellvivk.messenger.app.screens.home.adapter.SMSListItemSMS
 
-class HomeScreenViewModel(private val smsRepo: SMSRepositoryI): BaseViewModel() {
+class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel() {
 
     init {
         model = HomeScreenStateModel()
         initEvent = InitHomeScreen
     }
 
-    fun loadSmses(){
+    fun loadSmses() {
         var currPage: Int
         (model as HomeScreenStateModel).apply {
             currPage = this.page
@@ -27,37 +27,44 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI): BaseViewModel() 
         smsRepo.getSMS(page = currPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { list->
+            .doOnSuccess { list ->
                 var currMillis = System.currentTimeMillis()
                 var currHrThreshold = hrInMillis
                 var currHrs = 0
 
                 val newList = ArrayList<SMSListItem>()
-                newList.add(
-                    SMSListItem(
-                        type = SMSListItemHeader,
-                        item = "$currHrs hrs ago"
-                    )
+                var headerItem = SMSListItem(
+                    type = SMSListItemHeader,
+                    item = "$currHrs hrs ago"
                 )
-
-                list.map {sms->
-                    if (currMillis.minus(sms.date!!) < currHrThreshold){
-                        newList.add(
+                val tempList = arrayListOf<SMSListItem>()
+                list.map { sms ->
+                    if (currMillis.minus(sms.date!!) < currHrThreshold) {
+                        tempList.add(
                             SMSListItem(
                                 type = SMSListItemSMS,
                                 item = sms
                             )
                         )
-                    } else{
+                    } else {
+                        if (tempList.size > 0) {
+                            newList.add(headerItem)
+                            newList.addAll(tempList)
+                            tempList.clear()
+                        }
+
                         currHrThreshold += currHrThreshold
                         currHrs++
-                        newList.add(
-                            SMSListItem(
-                                type = SMSListItemHeader,
-                                item = "$currHrs hrs ago"
-                            )
+                        headerItem = SMSListItem(
+                            type = SMSListItemHeader,
+                            item = "$currHrs hrs ago"
                         )
                     }
+                }
+
+                if (tempList.size>0){
+                    newList.add(headerItem)
+                    newList.addAll(tempList)
                 }
 
                 sendEvent(LoadingSMSDone)
@@ -76,12 +83,12 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI): BaseViewModel() 
 data class HomeScreenStateModel(
     val page: Int = 1,
     val items: ArrayList<SMSListItem> = arrayListOf()
-): StateModel()
+) : StateModel()
 
 
-sealed class HomeScreenViewEvent: ViewEvent
-object InitHomeScreen: HomeScreenViewEvent()
-object LoadingSMS: HomeScreenViewEvent()
-object LoadingSMSDone: HomeScreenViewEvent()
-data class LoadingSMSError(val msg: String): HomeScreenViewEvent()
+sealed class HomeScreenViewEvent : ViewEvent
+object InitHomeScreen : HomeScreenViewEvent()
+object LoadingSMS : HomeScreenViewEvent()
+object LoadingSMSDone : HomeScreenViewEvent()
+data class LoadingSMSError(val msg: String) : HomeScreenViewEvent()
 

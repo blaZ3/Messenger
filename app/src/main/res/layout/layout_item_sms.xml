@@ -33,12 +33,28 @@
             android:layout_marginEnd="@dimen/marginHalf"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtMessageItemAddress"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextTitle"
-                tools:text="VKFLIPKART"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtMessageItemAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextTitle"
+                    android:layout_toStartOf="@+id/txtMessageItemTime"
+                    tools:text="VKFLIPKART"/>
+
+                <TextView
+                    android:id="@+id/txtMessageItemTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextSecondary"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/paddingHalf"
+                    tools:text="9 : 45"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtMessageItemSubject"
@@ -47,6 +63,8 @@
                 android:layout_marginTop="@dimen/marginHalf"
                 android:textAppearance="@style/TextTitle"
                 tools:text="Subject"/>
+
+
 
             <TextView
                 android:id="@+id/txtMessageItemBody"

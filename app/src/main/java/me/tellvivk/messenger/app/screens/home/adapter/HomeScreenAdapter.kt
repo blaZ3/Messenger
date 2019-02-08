@@ -41,6 +41,8 @@ class HomeScreenAdapter(context: Context,
                 view.txtMessageItemAddress.text = this.address
                 view.txtMessageItemSubject.text = valueFormatter
                     .getSmsSubject(this)
+                view.txtMessageItemTime.text = valueFormatter
+                    .getTimeForDisplay(this.date)
                 view.txtMessageItemBody.text = this.body
             }
         }
