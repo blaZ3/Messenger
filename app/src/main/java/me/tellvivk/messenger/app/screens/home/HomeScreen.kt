@@ -1,6 +1,8 @@
 package me.tellvivk.messenger.app.screens.home
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import com.uber.autodispose.autoDisposable
 import kotlinx.android.synthetic.main.activity_home.*
-import me.tellvivk.messenger.R
 import me.tellvivk.messenger.app.base.BaseActivity
 import me.tellvivk.messenger.app.base.BaseView
 import me.tellvivk.messenger.app.base.StateModel
@@ -17,6 +18,10 @@ import me.tellvivk.messenger.app.base.ViewEvent
 import me.tellvivk.messenger.app.screens.home.adapter.HomeScreenAdapter
 import me.tellvivk.messenger.app.screens.home.adapter.SmsItemListDiffCallback
 import org.koin.android.ext.android.get
+import android.content.IntentFilter
+import android.provider.Telephony
+import me.tellvivk.messenger.R
+
 
 class HomeScreen : BaseActivity() {
 
@@ -34,6 +39,12 @@ class HomeScreen : BaseActivity() {
         progressDialog.setMessage("Loading sms...")
 
         initView()
+        registerToNewSms()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterToNewSms()
     }
 
     override fun initView() {
@@ -57,6 +68,7 @@ class HomeScreen : BaseActivity() {
         viewModel.getViewEventObservable()
             .autoDisposable(AndroidLifecycleScopeProvider.from(this))
             .subscribe { handleEvent(it) }
+
     }
 
     override fun getParentView(): BaseView? {
@@ -89,6 +101,21 @@ class HomeScreen : BaseActivity() {
                     showToast(event.msg)
                 }
             }
+        }
+    }
+
+    private fun registerToNewSms() {
+        val filter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
+        registerReceiver(smsReceivedReceiver, filter)
+    }
+
+    private fun unregisterToNewSms(){
+        unregisterReceiver(smsReceivedReceiver)
+    }
+
+    private val smsReceivedReceiver = object :BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            viewModel.loadSmses()
         }
     }
 

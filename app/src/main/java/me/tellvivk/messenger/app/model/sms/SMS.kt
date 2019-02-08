@@ -1,6 +1,7 @@
 package me.tellvivk.messenger.app.model.sms
 
 import android.database.Cursor
+import android.telephony.SmsMessage
 import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
@@ -8,10 +9,10 @@ import androidx.core.database.getStringOrNull
 data class SMS(
     val id: Int? = 0,
     val threadId: Int? = 0,
-    val address: String? = null,
-    val body: String? = null,
+    val address: String? = "",
+    val body: String? = "",
     val date: Long? = 0,
-    val subject: String? = null,
+    val subject: String? = "",
     val seen: Int? = 0,
     val read: Int? = 0,
     val sent: Int? = 0
@@ -28,6 +29,15 @@ data class SMS(
                 seen = cursor.getIntOrNull(cursor.getColumnIndex(COLUMN_SEEN)),
                 read = cursor.getIntOrNull(cursor.getColumnIndex(COLUMN_READ)),
                 sent = cursor.getIntOrNull(cursor.getColumnIndex(COLUMN_SENT))
+            )
+        }
+
+        fun fromSmsMessage(msg: SmsMessage): SMS{
+            return SMS(
+                id = msg.indexOnIcc,
+                address = msg.originatingAddress,
+                body = msg.messageBody,
+                subject = msg.displayMessageBody
             )
         }
     }
