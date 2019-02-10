@@ -21,18 +21,6 @@
     <color name="offWhite">#c1c1c1</color>
     <color name="transparent">#00ffffff</color>
 
-    <color name="onBoarding1Border">#1f5279</color>
-    <color name="onBoarding1Start">#2d75ac</color>
-    <color name="onBoarding1End">#259dcf</color>
-
-    <color name="onBoarding2Border">#017e42</color>
-    <color name="onBoarding2Start">#00c466</color>
-    <color name="onBoarding2End">#34ea45</color>
-
-    <color name="onBoarding3Border">#973124</color>
-    <color name="onBoarding3Start">#e14b37</color>
-    <color name="onBoarding3End">#e68231</color>
-
     <color name="btnGreen">#00c466</color>
     <color name="btnGreenAlpha">#8300c466</color>
 
@@ -41,7 +29,6 @@
 
     <color name="btnBlue">#2d75ac</color>
     <color name="btnBlueAlpha">#832d75ac</color>
-
 
     <color name="medium_blue">#2d75ac</color>
 

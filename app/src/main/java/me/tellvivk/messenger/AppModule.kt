@@ -33,7 +33,7 @@ class AppModule {
             single<NetworkHelperI> { NetworkHelper(androidContext()) }
             single<FileHelperI> { FileHelper(androidContext()) }
             single<ImageHelperI> { ImageHelper() }
-            single<ValueFormatterI> { ValueFormatter() }
+            single<ValueFormatterI> { ValueFormatter(androidContext()) }
             single(name = "screenSize") { (windowManager: WindowManager) ->
                 val displayMetrics = DisplayMetrics()
 

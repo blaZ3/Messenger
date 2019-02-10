@@ -8,5 +8,7 @@ interface ValueFormatterI {
     fun getTimeForDisplay(millis: Long?): String
     fun getDpString(address: String): String
     fun getSmsSubject(sms: SMS): String
+    fun getRandomColor(): Int
+    fun getUnSeenColor(): Int
 
 }

@@ -35,7 +35,7 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
                 val newList = ArrayList<SMSListItem>()
                 var headerItem = SMSListItem(
                     type = SMSListItemHeader,
-                    item = "$currHrs hrs ago"
+                    item = "$currHrs hr ago"
                 )
                 val tempList = arrayListOf<SMSListItem>()
                 list.map { sms ->
@@ -57,7 +57,7 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
                         currHrs++
                         headerItem = SMSListItem(
                             type = SMSListItemHeader,
-                            item = "$currHrs hrs ago"
+                            item = if(currHrs > 0) "$currHrs hrs ago" else "$currHrs hr ago"
                         )
                     }
                 }

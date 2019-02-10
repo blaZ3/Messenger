@@ -15,17 +15,19 @@ import me.tellvivk.messenger.app.base.BaseActivity
 import me.tellvivk.messenger.app.base.BaseView
 import me.tellvivk.messenger.app.base.StateModel
 import me.tellvivk.messenger.app.base.ViewEvent
-import me.tellvivk.messenger.app.screens.home.adapter.HomeScreenAdapter
-import me.tellvivk.messenger.app.screens.home.adapter.SmsItemListDiffCallback
+import me.tellvivk.messenger.app.screens.home.adapter.MessagesAdapter
+import me.tellvivk.messenger.app.screens.home.adapter.MessagesDiffCallback
 import org.koin.android.ext.android.get
 import android.content.IntentFilter
 import android.provider.Telephony
+import android.content.res.Configuration
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import me.tellvivk.messenger.R
 
 
 class HomeScreen : BaseActivity() {
 
-    private lateinit var adapter: HomeScreenAdapter
+    private lateinit var adapter: MessagesAdapter
     private lateinit var viewModel: HomeScreenViewModel
     private lateinit var progressDialog: ProgressDialog
 
@@ -50,20 +52,30 @@ class HomeScreen : BaseActivity() {
     override fun initView() {
         viewModel = get()
 
-        adapter = HomeScreenAdapter(
+        adapter = MessagesAdapter(
             context = this, items = arrayListOf(),
             valueFormatter = get()
         )
-        recyclerMessages.layoutManager = LinearLayoutManager(
-            this,
-            RecyclerView.VERTICAL, false
-        )
+
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerMessages.layoutManager = StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.VERTICAL
+            )
+        } else {
+            recyclerMessages.layoutManager = LinearLayoutManager(
+                this,
+                RecyclerView.VERTICAL, false
+            )
+        }
+
         recyclerMessages.adapter = adapter
 
 
         viewModel.getViewModelObservable()
             .autoDisposable(AndroidLifecycleScopeProvider.from(this))
-            .subscribe{ updateView(it) }
+            .subscribe { updateView(it) }
 
         viewModel.getViewEventObservable()
             .autoDisposable(AndroidLifecycleScopeProvider.from(this))
@@ -78,7 +90,7 @@ class HomeScreen : BaseActivity() {
     override fun updateView(stateModel: StateModel) {
         (stateModel as HomeScreenStateModel).apply {
             val diffResult = DiffUtil.calculateDiff(
-                SmsItemListDiffCallback(
+                MessagesDiffCallback(
                     adapter.items,
                     this.items
                 )
@@ -109,11 +121,11 @@ class HomeScreen : BaseActivity() {
         registerReceiver(smsReceivedReceiver, filter)
     }
 
-    private fun unregisterToNewSms(){
+    private fun unregisterToNewSms() {
         unregisterReceiver(smsReceivedReceiver)
     }
 
-    private val smsReceivedReceiver = object :BroadcastReceiver(){
+    private val smsReceivedReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             viewModel.loadSmses()
         }

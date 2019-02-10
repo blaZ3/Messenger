@@ -1,11 +1,14 @@
 package me.tellvivk.messenger.helpers.valueFormatter
 
+import android.content.Context
+import android.graphics.Color
+import me.tellvivk.messenger.R
 import me.tellvivk.messenger.app.model.sms.SMS
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ValueFormatter: ValueFormatterI {
+class ValueFormatter(private val context: Context): ValueFormatterI {
 
     override fun getDateTimeStringFromMillis(millis: Long): String {
         return getDateTimeAsString(millis, "dd/MM/yyyy hh:mm:ss.SSS")
@@ -35,4 +38,15 @@ class ValueFormatter: ValueFormatterI {
         }
         return "--"
     }
+
+    override fun getRandomColor(): Int {
+        val allColors = context.resources.getStringArray(R.array.colorsArray)
+        return  Color.parseColor(allColors.random())
+    }
+
+    override fun getUnSeenColor(): Int {
+        return context.resources.getColor(R.color.primary_dark)
+    }
+
+
 }

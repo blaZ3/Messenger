@@ -2,7 +2,7 @@ package me.tellvivk.messenger.app.screens.home.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 
-class SmsItemListDiffCallback(
+class MessagesDiffCallback(
     private val oldItems: List<SMSListItem>,
     private val newItems: List<SMSListItem>
 ) : DiffUtil.Callback() {

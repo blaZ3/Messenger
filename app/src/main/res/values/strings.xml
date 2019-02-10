@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Messenger</string>
 
     <string name="str_progress">Loading messages....</string>
@@ -13,5 +13,18 @@
     <string name="str_home">Home</string>
     <string name="channel_name">NotificationChannel</string>
     <string name="channel_description">Channel used my test messenger to show notifications</string>
+
+
+    <string-array name="colorsArray" tools:ignore="ExtraTranslation">
+        <item>#379DC7</item>
+        <item>#9574D3</item>
+        <item>#39D389</item>
+        <item>#5EEEA9</item>
+        <item>#EEA76A</item>
+        <item>#F1D859</item>
+        <item>#F53E72</item>
+        <item>#F07686</item>
+        <item>#98F775</item>
+    </string-array>
 
 </resources>

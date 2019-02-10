@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/offWhite">
+    android:background="@color/divider">
 
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txtMessageListHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextTitleBold"
+        android:textAppearance="@style/TextTitle"
+        android:textColor="@color/primary_text"
         android:padding="@dimen/paddingHalf"
         android:textSize="16sp"
         tools:text="Header"/>
-
 
     <View
         android:layout_width="match_parent"
