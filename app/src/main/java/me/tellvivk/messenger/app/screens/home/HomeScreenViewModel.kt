@@ -1,6 +1,5 @@
 package me.tellvivk.messenger.app.screens.home
 
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.tellvivk.messenger.app.base.BaseViewModel
