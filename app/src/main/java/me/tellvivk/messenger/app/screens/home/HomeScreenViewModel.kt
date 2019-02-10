@@ -1,5 +1,6 @@
 package me.tellvivk.messenger.app.screens.home
 
+import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.tellvivk.messenger.app.base.BaseViewModel
@@ -28,8 +29,9 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { list ->
+                Log.d("Viewmodel got sms", "count: ${list.size}")
                 var currMillis = System.currentTimeMillis()
-                var currHrThreshold = hrInMillis
+                var currThresholdInMillis = hrInMillis
                 var currHrs = 0
 
                 val newList = ArrayList<SMSListItem>()
@@ -39,7 +41,7 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
                 )
                 val tempList = arrayListOf<SMSListItem>()
                 list.map { sms ->
-                    if (currMillis.minus(sms.date!!) < currHrThreshold) {
+                    if (currMillis.minus(sms.date!!) < currThresholdInMillis) {
                         tempList.add(
                             SMSListItem(
                                 type = SMSListItemSMS,
@@ -50,15 +52,21 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
                         if (tempList.size > 0) {
                             newList.add(headerItem)
                             newList.addAll(tempList)
-                            tempList.clear()
                         }
 
-                        currHrThreshold += currHrThreshold
+                        currThresholdInMillis += currThresholdInMillis
                         currHrs++
                         headerItem = SMSListItem(
                             type = SMSListItemHeader,
                             item = if(currHrs > 0) "$currHrs hrs ago" else "$currHrs hr ago"
                         )
+
+                        tempList.clear()
+                        tempList.add(
+                            SMSListItem(
+                            type = SMSListItemSMS,
+                                item = sms
+                        ))
                     }
                 }
 

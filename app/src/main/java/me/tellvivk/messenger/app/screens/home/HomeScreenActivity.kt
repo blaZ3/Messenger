@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Telephony
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -95,6 +96,9 @@ class HomeScreenActivity : BaseActivity() {
                     this.items
                 )
             )
+
+            Log.d("updateView got sms", "count: ${this.items.size}")
+
             adapter.items = this.items
             diffResult.dispatchUpdatesTo(adapter)
         }
