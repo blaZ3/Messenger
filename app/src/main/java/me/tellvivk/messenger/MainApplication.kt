@@ -36,3 +36,4 @@ class MainApplication : Application() {
 }
 
 const val CHANNEL_ID = "123456"
+const val EXTRA_NEW_SMS_HASH = "EXTRA_NEW_SMS_HASH"

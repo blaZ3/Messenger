@@ -1,12 +1,13 @@
 package me.tellvivk.messenger.app.screens.home.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_item_header.view.*
 import kotlinx.android.synthetic.main.layout_item_sms.view.*
@@ -23,8 +24,10 @@ class MessagesAdapter(
     RecyclerView.Adapter<MessagesAdapter.HomeScreenAdapterViewHolder>() {
 
     private var weakContext: WeakReference<Context> = WeakReference(context)
+    private var shakeAnim: Animation = AnimationUtils.loadAnimation(weakContext.get(),
+        R.anim.shake)
 
-    abstract class HomeScreenAdapterViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    abstract class HomeScreenAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun onBind(item: SMSListItem)
     }
 
@@ -39,6 +42,7 @@ class MessagesAdapter(
 
     class HomeScreenAdapterSmsViewHolder(
         private val view: View,
+        private val shakeAnimation: Animation,
         private val valueFormatter: ValueFormatterI
     ) :
         HomeScreenAdapterViewHolder(view) {
@@ -64,6 +68,11 @@ class MessagesAdapter(
                     view.txtMessageItemAddress
                         .setTextColor(valueFormatter.getUnSeenColor())
                 }
+
+                if (item.shake) {
+                    view.startAnimation(shakeAnimation)
+                    item.shake = false
+                }
             }
         }
     }
@@ -83,7 +92,7 @@ class MessagesAdapter(
                 R.layout.layout_item_sms, parent,
                 false
             )
-            return HomeScreenAdapterSmsViewHolder(view, valueFormatter)
+            return HomeScreenAdapterSmsViewHolder(view, shakeAnim, valueFormatter)
         }
 
         throw IllegalStateException("Context cannot be null")
@@ -105,11 +114,23 @@ class MessagesAdapter(
         return items.size
     }
 
+    fun shake(position: Int) {
+        try {
+            if (items.size >= position) {
+                items[position].shake = true
+                notifyItemChanged(position)
+            }
+        } catch (ex: IndexOutOfBoundsException) {
+            ex.printStackTrace()
+        }
+    }
+
 }
 
 
 data class SMSListItem(
     val type: SMSListItemType,
+    var shake: Boolean = false,
     val item: Any
 )
 

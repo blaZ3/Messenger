@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import me.tellvivk.messenger.CHANNEL_ID
+import me.tellvivk.messenger.EXTRA_NEW_SMS_HASH
 import me.tellvivk.messenger.R
 import me.tellvivk.messenger.app.model.sms.SMS
 import me.tellvivk.messenger.app.screens.home.HomeScreenActivity
@@ -52,6 +53,7 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
     private fun showNotification(context: Context, sms: SMS) {
         // Create an explicit intent for an Activity in your app
         val intent = Intent(context, HomeScreenActivity::class.java)
+        intent.putExtra(EXTRA_NEW_SMS_HASH, sms.body.hashCode())
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
             context,
             0, intent, 0

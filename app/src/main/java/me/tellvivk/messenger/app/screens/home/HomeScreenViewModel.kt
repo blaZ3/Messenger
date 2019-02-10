@@ -29,7 +29,6 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { list ->
-                Log.d("Viewmodel got sms", "count: ${list.size}")
                 var currMillis = System.currentTimeMillis()
                 var currThresholdInMillis = hrInMillis
                 var currHrs = 0
@@ -52,13 +51,14 @@ class HomeScreenViewModel(private val smsRepo: SMSRepositoryI) : BaseViewModel()
                         if (tempList.size > 0) {
                             newList.add(headerItem)
                             newList.addAll(tempList)
+                            tempList.clear()
                         }
 
                         currThresholdInMillis += currThresholdInMillis
                         currHrs++
                         headerItem = SMSListItem(
                             type = SMSListItemHeader,
-                            item = if(currHrs > 0) "$currHrs hrs ago" else "$currHrs hr ago"
+                            item = if(currHrs > 1) "$currHrs hrs ago" else "$currHrs hr ago"
                         )
 
                         tempList.clear()
