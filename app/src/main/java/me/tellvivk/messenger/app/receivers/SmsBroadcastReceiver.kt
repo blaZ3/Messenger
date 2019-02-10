@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
 import android.provider.Telephony
 import android.telephony.SmsMessage
 import android.util.Log
@@ -66,7 +67,8 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        sms.id?.let { smsId->
+        //show only latest message from an address
+        sms.address.hashCode().let { smsId->
             with(NotificationManagerCompat.from(context)) {
                 notify(smsId, notificationBuilder.build())
             }
