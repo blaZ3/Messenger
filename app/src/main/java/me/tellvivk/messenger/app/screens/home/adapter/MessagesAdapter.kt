@@ -44,7 +44,7 @@ class MessagesAdapter(
         HomeScreenAdapterViewHolder(view) {
         override fun onBind(item: SMSListItem) {
             (item.item as SMS).apply {
-                view.txtMessageItemDP.text = valueFormatter.getDpString(this.address!!)
+                view.txtMessageItemDP.text = this.address?.let { valueFormatter.getDpString(it) }
                 val bg: GradientDrawable = view.txtMessageItemDP.background as GradientDrawable
                 bg.setColor(valueFormatter.getRandomColor())
 

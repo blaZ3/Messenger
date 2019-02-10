@@ -7,10 +7,6 @@ import me.tellvivk.messenger.app.model.sms.SMSRepositoryI
 import me.tellvivk.messenger.app.screens.home.HomeScreenViewModel
 import me.tellvivk.messenger.datasources.sms.SMSDataSource
 import me.tellvivk.messenger.datasources.sms.SMSDataSourceI
-import me.tellvivk.messenger.helpers.fileHelper.FileHelper
-import me.tellvivk.messenger.helpers.fileHelper.FileHelperI
-import me.tellvivk.messenger.helpers.imageHelper.ImageHelper
-import me.tellvivk.messenger.helpers.imageHelper.ImageHelperI
 import me.tellvivk.messenger.helpers.logger.AppLogger
 import me.tellvivk.messenger.helpers.logger.LoggerI
 import me.tellvivk.messenger.helpers.networkHelper.NetworkHelper
@@ -31,8 +27,6 @@ class AppModule {
             single<LoggerI> { AppLogger(BuildConfig.DEBUG) }
             single<StringFetcherI> { AppStringFetcher(androidContext()) }
             single<NetworkHelperI> { NetworkHelper(androidContext()) }
-            single<FileHelperI> { FileHelper(androidContext()) }
-            single<ImageHelperI> { ImageHelper() }
             single<ValueFormatterI> { ValueFormatter(androidContext()) }
             single(name = "screenSize") { (windowManager: WindowManager) ->
                 val displayMetrics = DisplayMetrics()
