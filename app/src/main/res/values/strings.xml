@@ -8,7 +8,6 @@
     <string name="str_txt_cancel">Cancel</string>
     <string name="str_txt_okay">Okay</string>
 
-    <string name="str_grant_storage_permissions">Please grant all permissions</string>
     <string name="str_permission_rationale">Please grant all permissions</string>
     <string name="str_home">Home</string>
     <string name="channel_name">NotificationChannel</string>

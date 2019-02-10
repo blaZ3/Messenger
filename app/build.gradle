@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "me.tellvivk.messenger"
         minSdkVersion 17
-        targetSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -47,10 +47,8 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$androidx_view_version"
     implementation "com.google.android.material:material:$android_material_version"
 
-    implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation "com.karumi:dexter:5.0.0"
 
@@ -64,22 +62,11 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
-
-    implementation "com.google.code.gson:gson:$gson_version"
-
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-
     //unit testing
     testImplementation "org.json:json:$test_gson_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_core_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
-    testImplementation "com.squareup.okhttp3:mockwebserver:$test_retrofit_mock_webserver_version"
 
     //ui testing
     androidTestImplementation "com.android.support.test:runner:$test_runner_version"

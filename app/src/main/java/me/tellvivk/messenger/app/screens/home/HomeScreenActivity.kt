@@ -1,5 +1,6 @@
 package me.tellvivk.messenger.app.screens.home
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -11,6 +12,11 @@ import android.provider.Telephony
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import com.uber.autodispose.autoDisposable
 import kotlinx.android.synthetic.main.activity_home.*
@@ -48,8 +54,29 @@ class HomeScreenActivity : BaseActivity() {
             }
         }
 
-        initView()
-        registerToNewSms()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Dexter.withActivity(this)
+            .withPermissions(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS)
+            .withListener(object : MultiplePermissionsListener{
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    if (report?.areAllPermissionsGranted()!!){
+                        initView()
+                        registerToNewSms()
+                    }else{
+                        showToast(resources.getString(R.string.str_permission_rationale))
+                    }
+                }
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    showToast(resources.getString(R.string.str_permission_rationale))
+                }
+            }).check()
     }
 
     override fun onDestroy() {
