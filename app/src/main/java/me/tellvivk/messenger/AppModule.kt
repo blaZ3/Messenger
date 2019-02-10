@@ -9,8 +9,6 @@ import me.tellvivk.messenger.datasources.sms.SMSDataSource
 import me.tellvivk.messenger.datasources.sms.SMSDataSourceI
 import me.tellvivk.messenger.helpers.logger.AppLogger
 import me.tellvivk.messenger.helpers.logger.LoggerI
-import me.tellvivk.messenger.helpers.networkHelper.NetworkHelper
-import me.tellvivk.messenger.helpers.networkHelper.NetworkHelperI
 import me.tellvivk.messenger.helpers.stringFetcher.AppStringFetcher
 import me.tellvivk.messenger.helpers.stringFetcher.StringFetcherI
 import me.tellvivk.messenger.helpers.valueFormatter.ValueFormatter
@@ -26,7 +24,6 @@ class AppModule {
         private val appModule = module {
             single<LoggerI> { AppLogger(BuildConfig.DEBUG) }
             single<StringFetcherI> { AppStringFetcher(androidContext()) }
-            single<NetworkHelperI> { NetworkHelper(androidContext()) }
             single<ValueFormatterI> { ValueFormatter(androidContext()) }
             single(name = "screenSize") { (windowManager: WindowManager) ->
                 val displayMetrics = DisplayMetrics()
