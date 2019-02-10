@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Handler
 import android.provider.Telephony
 import android.telephony.SmsMessage
 import android.util.Log
@@ -14,7 +13,7 @@ import androidx.core.app.NotificationManagerCompat
 import me.tellvivk.messenger.CHANNEL_ID
 import me.tellvivk.messenger.R
 import me.tellvivk.messenger.app.model.sms.SMS
-import me.tellvivk.messenger.app.screens.home.HomeScreen
+import me.tellvivk.messenger.app.screens.home.HomeScreenActivity
 
 
 class SmsBroadcastReceiver : BroadcastReceiver() {
@@ -50,25 +49,31 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
     }
 
 
-    private fun showNotification(context: Context, sms: SMS){
+    private fun showNotification(context: Context, sms: SMS) {
         // Create an explicit intent for an Activity in your app
-        val intent = Intent(context, HomeScreen::class.java)
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context,
-            0, intent, 0)
+        val intent = Intent(context, HomeScreenActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            context,
+            0, intent, 0
+        )
 
-        val notificationBuilder = NotificationCompat.Builder(context,
-            CHANNEL_ID)
+        val notificationBuilder = NotificationCompat.Builder(
+            context,
+            CHANNEL_ID
+        )
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(sms.address)
             .setContentText(sms.body)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(sms.body))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(sms.body)
+            )
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         //show only latest message from an address
-        sms.address.hashCode().let { smsId->
+        sms.address.hashCode().let { smsId ->
             with(NotificationManagerCompat.from(context)) {
                 notify(smsId, notificationBuilder.build())
             }
@@ -76,7 +81,6 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
 
 
     }
-
 
 
 }

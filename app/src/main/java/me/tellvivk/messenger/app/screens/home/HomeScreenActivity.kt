@@ -4,13 +4,18 @@ import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
 import android.os.Bundle
+import android.provider.Telephony
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import com.uber.autodispose.autoDisposable
 import kotlinx.android.synthetic.main.activity_home.*
+import me.tellvivk.messenger.R
 import me.tellvivk.messenger.app.base.BaseActivity
 import me.tellvivk.messenger.app.base.BaseView
 import me.tellvivk.messenger.app.base.StateModel
@@ -18,14 +23,9 @@ import me.tellvivk.messenger.app.base.ViewEvent
 import me.tellvivk.messenger.app.screens.home.adapter.MessagesAdapter
 import me.tellvivk.messenger.app.screens.home.adapter.MessagesDiffCallback
 import org.koin.android.ext.android.get
-import android.content.IntentFilter
-import android.provider.Telephony
-import android.content.res.Configuration
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import me.tellvivk.messenger.R
 
 
-class HomeScreen : BaseActivity() {
+class HomeScreenActivity : BaseActivity() {
 
     private lateinit var adapter: MessagesAdapter
     private lateinit var viewModel: HomeScreenViewModel
@@ -135,7 +135,7 @@ class HomeScreen : BaseActivity() {
     companion object {
         fun start(activity: BaseActivity) {
             activity.apply {
-                startActivity(Intent(activity, HomeScreen::class.java))
+                startActivity(Intent(activity, HomeScreenActivity::class.java))
             }
         }
     }
